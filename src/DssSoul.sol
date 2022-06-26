@@ -115,7 +115,6 @@ contract DssSoul is ERC721, ERC721Enumerable, ERC721Metadata {
     }
 
     // --- Admin ---
-
     function init(
         string calldata item,
         string calldata tale,
@@ -171,9 +170,9 @@ contract DssSoul is ERC721, ERC721Enumerable, ERC721Metadata {
     }
 
     function nft (address _soul, uint256 _kin) external view returns (uint256 _nft) {
-        require(_kin > kins, "DssSoul/invalid-template-id");
+        require(ids > _kin, "DssSoul/invalid-kin-id");
         _nft = _bind(_soul, _kin);
-        require(live(_nft), "DssSoul/invalid-token-id");
+        require(live(_nft), "DssSoul/invalid-nft-id");
     }
 
     function _bind(address _soul, uint256 _kin) private pure returns (uint256 _nft) {
@@ -184,11 +183,11 @@ contract DssSoul is ERC721, ERC721Enumerable, ERC721Metadata {
     }
 
     function soul(uint256 _nft) external view returns (address _soul) {
-        require(live(_nft), "DssSoul/invalid-token-id");
+        require(live(_nft), "DssSoul/invalid-nft-id");
         (_soul, ) = _unbind(_nft);
     }
     function kin(uint256 _nft) external view returns (uint256 _kin) {
-        require(live(_nft), "DssSoul/invalid-token-id");
+        require(live(_nft), "DssSoul/invalid-nft-id");
         (, _kin) = _unbind(_nft);
     }
 
@@ -201,7 +200,7 @@ contract DssSoul is ERC721, ERC721Enumerable, ERC721Metadata {
 
     function _mint(address _to, uint256 _nft, string calldata _uri) private {
         require(_to != address(0), "DssSoul/invalid-address");
-        require(!live(_nft), "DssSoul/already-minted");
+        require(!live(_nft), "DssSoul/nft-already-minted");
 
         _nfts++;
         _souls[_nft] = _to;
