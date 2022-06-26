@@ -89,8 +89,8 @@ contract DssSoul is ERC721, ERC721Enumerable, ERC721Metadata {
 
     constructor(string memory name_, string memory symbol_)
     {
-        name = name_;   // "DSS Soulbound"
-        symbol = symbol; // "KIN"
+        name = name_;     // "DSS Soulbound"
+        symbol = symbol_; // "KIN"
         link = "https://ipfs.io/ipfs/";
     }
 
@@ -151,7 +151,7 @@ contract DssSoul is ERC721, ERC721Enumerable, ERC721Metadata {
     }
 
     // --- Soulbound ---
-    function bind (
+    function bind(
         bytes32[] calldata proof,
         uint256 _kin,
         string calldata uri
@@ -169,7 +169,7 @@ contract DssSoul is ERC721, ERC721Enumerable, ERC721Metadata {
         emit Bind(_nft);
     }
 
-    function nft (address _soul, uint256 _kin) external view returns (uint256 _nft) {
+    function nft(address _soul, uint256 _kin) external view returns (uint256 _nft) {
         require(ids > _kin, "DssSoul/invalid-kin-id");
         _nft = _bind(_soul, _kin);
         require(live(_nft), "DssSoul/invalid-nft-id");
