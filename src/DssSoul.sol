@@ -57,7 +57,7 @@ contract DssSoul is ERC721, ERC721Enumerable, ERC721Metadata {
     struct Kin {
         string item;
         string tale;
-        string icon;
+        string loot;
     }
     mapping(uint256 => Kin) public kins;
 
@@ -81,7 +81,7 @@ contract DssSoul is ERC721, ERC721Enumerable, ERC721Metadata {
     // --- Events ---
     event Rely(address indexed usr);
     event Deny(address indexed usr);
-    event Init(uint256 kin, string item, string tale, string icon);
+    event Init(uint256 kin, string item, string tale, string loot);
     event File(bytes32 indexed what, bytes32 data);
     event File(bytes32 indexed what, string data);
     event File(uint256 indexed id, bytes32 indexed what, string data);
@@ -118,15 +118,15 @@ contract DssSoul is ERC721, ERC721Enumerable, ERC721Metadata {
     function init(
         string calldata item,
         string calldata tale,
-        string calldata icon
+        string calldata loot
     ) external auth {
         uint256 id = ids++;
 
         kins[id].item = item;
         kins[id].tale = tale;
-        kins[id].icon = icon;
+        kins[id].loot = loot;
 
-        emit Init(id, item, tale, icon);
+        emit Init(id, item, tale, loot);
     }
 
     function file(bytes32 what, bytes32 data) external auth {
@@ -145,7 +145,7 @@ contract DssSoul is ERC721, ERC721Enumerable, ERC721Metadata {
         require(ids > id, "DssSoul/invalid-kin-id");
         if      (what == "item") kins[id].item = data;
         else if (what == "tale") kins[id].tale = data;
-        else if (what == "icon") kins[id].icon = data;
+        else if (what == "loot") kins[id].loot = data;
         else revert("DssSoul/file-unrecognized-param");
         emit File(id, what, data);
     }
