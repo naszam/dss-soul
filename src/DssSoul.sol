@@ -192,10 +192,10 @@ contract DssSoul is ERC721, ERC721Enumerable, ERC721Metadata {
     }
 
     function _unbind(uint256 _nft) private pure returns (address _soul, uint256 _kin) {
-        assembly {
-            _soul := shr(96, and(_nft, 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF000000000000000000000000))
-            _kin := and(_nft, 0x0000000000000000000000000000000000000000FFFFFFFFFFFFFFFFFFFFFFFF)
-        }
+        // shift _nft by 96 bits and convert to address
+        _soul = address(uint160(_nft >> 96));
+        // mask lower 96 bits
+        _kin  = _nft & type(uint96).max;
     }
 
     function _mint(address _to, uint256 _nft, string calldata _uri) private {
