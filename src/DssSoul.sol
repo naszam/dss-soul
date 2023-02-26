@@ -195,7 +195,7 @@ contract DssSoul is ERC721, ERC721Enumerable, ERC721Metadata {
         // shift _nft by 96 bits and convert to address
         _soul = address(uint160(_nft >> 96));
         // mask lower 96 bits
-        _kin  = _nft & (2**96 - 1);
+        _kin  = _nft & type(uint96).max;
     }
 
     function _mint(address _to, uint256 _nft, string calldata _uri) private {
